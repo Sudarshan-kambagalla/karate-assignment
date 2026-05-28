@@ -4,24 +4,25 @@
     # Use get method
     # After response received, create a .json file using java code
     # Create a .csv file using java code
-Feature: Assignment 1 - Store API response into JSON and CSV files
-  Scenario: Create JSON and CSV files from API response
+Feature: Store API response into JSON and CSV files
 
-    Given url 'https://jsonplaceholder.typicode.com'
+  Background:
+    * url 'https://jsonplaceholder.typicode.com'
+    * def jsonFilePath = 'output/json/posts.json'
+    * def csvFilePath = 'output/csv/posts.csv'
+    * def FileUtils = Java.type('utils.FileUtils')
+  Scenario:  Validate API response data is stored into files
 
-    And path '/posts'
+    Given path '/posts'
 
     When method GET
 
     Then status 200
-
-    * print response
-
+    And match response != null
+    And assert response.length > 0
+    
     * def jsonData = karate.pretty(response)
 
-    * def FileUtils = Java.type('utils.FileUtils')
+    * eval FileUtils.writeJson(jsonFilePath, jsonData)
 
-
-    * eval FileUtils.writeJson('output/json/posts.json',jsonData)
-
-    * eval FileUtils.writeCsv('output/csv/posts.csv',response)
+    * eval FileUtils.writeCsv(csvFilePath, response)

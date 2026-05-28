@@ -3,19 +3,22 @@
     #       2. Use get method
     #       3. call scenario1 if Id is even no. in response
     #       4. Call scenario2 if id is odd no.
-Feature: Assignment 2 - Conditional Scenario Calling
+Feature: Conditional Scenario Calling
+
+  Background:
+    * url 'https://jsonplaceholder.typicode.com'
 
   Scenario: Call scenarios based on even and odd ids
 
-    Given url 'https://jsonplaceholder.typicode.com'
-    And path '/posts'
+    Given path '/posts'
 
     When method GET
+
     Then status 200
 
     * def posts = response
 
-    * def processPost =
+    * def processPostsById =
     """
     function(post){
 
@@ -23,13 +26,13 @@ Feature: Assignment 2 - Conditional Scenario Calling
 
         if(id % 2 == 0){
 
-            karate.call('classpath:features/evenScenario.feature',{ id: id });
+            karate.call('classpath:features/evenScenario.feature', { id: id });
+        } 
+        else {
 
-        } else {
-
-            karate.call('classpath:features/oddScenario.feature',{ id: id });
+            karate.call('classpath:features/oddScenario.feature', { id: id });
         }
     }
     """
 
-    * karate.forEach(posts, processPost)
+    * karate.forEach(posts, processPostsById)

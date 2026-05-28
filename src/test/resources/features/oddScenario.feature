@@ -1,4 +1,6 @@
 Feature: Odd ID Scenario
+  Scenario: Validate ID is odd
 
-  Scenario:
     * print 'Odd ID Found ->', id
+
+    * assert id % 2 != 0
