@@ -5,11 +5,16 @@
     # 2. Use get method
     # 3. Call javascript code and send the response to java script code
     # 4. Print the updated responses
-Feature: Assignment 5 - Create array using JavaScript
+Feature: Create array using JavaScript
+
+  Background:
+    * url 'https://jsonplaceholder.typicode.com'
   Scenario: Create userid array from response
-    Given url 'https://jsonplaceholder.typicode.com'
-    And path '/posts'
+   
+    Given path '/posts'
+
     When method GET
+
     Then status 200
 
     * def posts = response

@@ -1,9 +1,15 @@
-Feature: Assignment 4 - Remove specific key from response
+Feature: Remove specific key from response
+
+  Background:
+    * url 'https://jsonplaceholder.typicode.com'
   Scenario: Remove body key from response
-    Given url 'https://jsonplaceholder.typicode.com'
-    And path '/posts'
+    
+    Given path '/posts'
+
     When method GET
+
     Then status 200
+
     * def posts = response
     * def removeBody =
     """

@@ -5,15 +5,20 @@
     #      2. Use get method
     #      3. Create a csv file with the keys and values in the response
 
-Feature: Assignment 3 - Create CSV and pass to another feature
+Feature: Create CSV and pass to another feature
+  
+  Background:
+    * url 'https://jsonplaceholder.typicode.com'
 
   Scenario: Create CSV file from API response
 
-    Given url 'https://jsonplaceholder.typicode.com'
-    And path '/posts'
+    Given path '/posts'
 
     When method GET
+
     Then status 200
+    And match response != null
+    And assert response.length > 0
 
     * def posts = response
 
@@ -31,7 +36,5 @@ Feature: Assignment 3 - Create CSV and pass to another feature
     * karate.forEach(posts, createCsv)
 
     * karate.write(csvData, 'posts.csv')
-
-    * print 'CSV File Created'
 
     * call read('classpath:features/readCsv.feature')
