@@ -19,4 +19,5 @@ Feature: Remove specific key from response
     }
     """
     * def updatedResponse = karate.map(posts, removeBody)
-    * print updatedResponse
+
+    * karate.log(updatedResponse)

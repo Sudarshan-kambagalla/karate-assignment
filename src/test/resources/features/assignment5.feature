@@ -16,17 +16,22 @@ Feature: Create array using JavaScript
     When method GET
 
     Then status 200
+    And match response != null
+    And assert response.length > 0
+
 
     * def posts = response
     * def extractUserIds =
     """
     function(data){
-        var userIds = [];
-        for(var i = 0; i < data.length; i++){
-            userIds.push(data[i].userId);
-        }
-        return userIds;
+        return data.map(function(post){
+            return post.userId;
+        });
     }
     """
-    * def userIdArray = extractUserIds(posts)
-    * print userIdArray
+    * def userIdList = extractUserIds(posts)
+    
+    * match userIdList != null
+    * assert userIdList.length > 0
+
+    * print userIdList
